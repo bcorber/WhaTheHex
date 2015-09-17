@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+
+
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+
+
+    <!-- --------------- App init --------------- -->
+
+    <title>WhaTheHex</title>
+    
+
+    <script>
+        angular.module('app', ['onsen']);
+    </script>
+
+   <link rel="stylesheet" href="css/index.css" />
+
+
+
+</head>
+
+<body>
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- -->
+
+    <ons-sliding-menu menu-page="menu.html" main-page="rgb.html" side="left"
+                      var="menu" type="reveal" max-slide-distance="260px" swipeable="false">
+    </ons-sliding-menu>
+
+    <ons-template id="menu.html">
+        <ons-page modifier="menu-page">
+            <ons-toolbar modifier="transparent"></ons-toolbar>
+
+            <ons-list class="menu-list">
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('live.html', {closeMenu: true})">
+                    <ons-icon icon="fa-camera"></ons-icon>
+                    Camera View
+                </ons-list-item>
+
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('gallery.html', {closeMenu: true})">
+                    <ons-icon icon="fa-picture-o"></ons-icon>
+                    Choose from Gallery
+                </ons-list-item>
+
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('pallette.html', {closeMenu: true})">
+                    <ons-icon icon="ion-android-color-palette"></ons-icon>
+                    
+                    Colour Pallette
+                </ons-list-item>
+            </ons-list>
+
+            <ons-list class="bottom-menu-list">
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('rgb.html', {closeMenu: true})">
+                    <ons-icon icon="ion-ios-settings-strong"></ons-icon>
+                    RGB Sliders
+                    
+                </ons-list-item>
+
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('help.html', {closeMenu: true})">
+                    <ons-icon icon="ion-help"></ons-icon>
+                    Help
+                </ons-list-item>
+
+            </ons-list>
+        </ons-page>
+    </ons-template>
+    
+<!--                        Live Camera View    -->
+    
+    <ons-template id="live.html">
+        <ons-page ng-controller="LiveController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Live Camera</div>
+            </ons-toolbar>
+            
+            <button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="capturePhoto();">Capture Photo</button>
+    
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;width:100%;" id="largeImage" src="" />
+
+    <script type="text/javascript" charset="utf-8">
+
+        var pictureSource;   // picture source
+        var destinationType; // sets the format of returned value
+
+        document.addEventListener("deviceready",onDeviceReady,false);
+
+        function onDeviceReady() {
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        }
+
+        function onPhotoDataSuccess(imageData) {
+          var smallImage = document.getElementById('largeImage');
+          largeImage.style.display = 'block';
+          largeImage.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        function capturePhoto() {
+          navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+            destinationType: destinationType.DATA_URL });
+        }
+
+        function onFail(message) {
+          console.log('Failed because: ' + message);
+        }
+
+    </script>
+              
+        </ons-page>
+    </ons-template>
+    
+<!--      Device's photo Gallery                                 -->
+    
+    <ons-template id="gallery.html">
+        <ons-page ng-controller="GalleryController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Gallery</div>
+            </ons-toolbar>
+
+
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                   
+                </ons-col>
+            </ons-row>
+            <button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+            
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;width:100%;" id="largeImage" src="" />
+
+    <script type="text/javascript" charset="utf-8">
+
+        var pictureSource;   // picture source
+        var destinationType; // sets the format of returned value
+
+        document.addEventListener("deviceready",onDeviceReady,false);
+
+        function onDeviceReady() {
+            pictureSource=navigator.camera.PictureSourceType;
+            destinationType=navigator.camera.DestinationType;
+        }
+
+        function onPhotoDataSuccess(imageData) {
+          var smallImage = document.getElementById('largeImage');
+          smallImage.style.display = 'block';
+          smallImage.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        function onPhotoURISuccess(imageURI) {
+          var largeImage = document.getElementById('largeImage');
+          largeImage.style.display = 'block';
+          largeImage.src = imageURI;
+        }
+
+        function getPhoto(source) {
+          navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+            destinationType: destinationType.FILE_URI,
+            sourceType: source });
+        }
+
+        function onFail(message) {
+          alert('Failed because: ' + message);
+        }
+
+    </script>
+        </ons-page>
+    </ons-template>
+    
+<!--                    Saved Colour Pallette       -->
+    
+    
+     <ons-template id="pallette.html">
+        <ons-page ng-controller="PalletteController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Colour Pallette</div>
+            </ons-toolbar>
+
+
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                   
+                </ons-col>
+            </ons-row>
+
+        </ons-page>
+    </ons-template>
+    
+<!--                        RGB Sliders           -->
+    
+     <ons-template id="rgb.html">
+        <ons-page ng-controller="RgbController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">RGB</div>
+            </ons-toolbar>
+            <div id="color" style="width:100%;height:50%;background-color:rgb(0,255,255);"></div>
+            
+            <input type="range" class="range" ng-change="updateColor()" min="0" max="255" ng-model="red" style="display:block;margin-left:auto;margin-right:auto;margin-top:50px;width:250px;">
+            
+            <br>
+
+            <input type="range" ng-change="updateColor()" class="range" min="0" max="255" ng-model="blue" style="display:block;margin-left:auto;margin-right:auto;width:250px;">
+            
+            <br>
+
+        <input type="range" ng-change="updateColor()" class="range" min="0" max="255" ng-model="green" style="display:block;margin-left:auto;margin-right:auto;width:250px;">
+        
+
+            
+            
+        </ons-page>
+    </ons-template>
+    
+                <!--     Help                    -->
+    
+     <ons-template id="help.html">
+        <ons-page ng-controller="HelpController">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Help</div>
+                
+                
+            </ons-toolbar>
+
+
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                   
+                </ons-col>
+            </ons-row>
+<p>Thank you for downloading WhaTheHex colour picker app!</p>
+                <p>You have 3 options for finding the on screen hex code for that colour you want to capture!</p>
+                <ul>
+                <li>Live Camera view</li>
+                
+                <li>Upload photo from Gallery</li>
+                    
+                <li>RGB sliders</li>
+                
+                </ul>
+        </ons-page>
+    </ons-template>
+</body>
+</html>
