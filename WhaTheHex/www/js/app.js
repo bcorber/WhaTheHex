@@ -3,11 +3,11 @@
   var module = angular.module('app', ['onsen']);
 
   module.controller('AppController', function($scope, $data) {
-    $scope.doSomething = function() {
-      setTimeout(function() {
-        ons.notification.alert({ message: 'tapped' });
-      }, 100);
-    };
+
+      
+      
+      
+      
   });
 
   module.controller
@@ -23,6 +23,25 @@
     {
 
         //where the magic happens... on device ready GetCamera
+        var mousePos = getMousePos(canvas, evt);
+        var color = undefined;
+      
+      if(mouseDown && mousePos !== null && mousePos.x > padding && mousePos.x < padding + imageObj.width && mousePos.y > padding && mousePos.y < padding + imageObj.height) {
+
+            // color picker image is 256x256 and is offset by 10px
+            // from top and bottom
+            var imageData = context.getImageData(padding, padding, imageObj.width, imageObj.width);
+            var data = imageData.data;
+            var x = mousePos.x - padding;
+            var y = mousePos.y - padding;
+            var red = data[((imageObj.width * y) + x) * 4];
+            var green = data[((imageObj.width * y) + x) * 4 + 1];
+            var blue = data[((imageObj.width * y) + x) * 4 + 2];
+//            var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
+//            drawColorSquare(canvas, color, imageObj);
+          }
+        }, false);
+
       
     });
     
@@ -53,6 +72,7 @@
             $scope.red = 0;
             $scope.green = 255;
             $scope.blue = 255;
+            $scope.hex = '';
          
         $scope.updateColor = function (){
             
@@ -61,23 +81,26 @@
            
         }
          
-        function getColor(){
-            console.log("R: " + $scope.red );
-              console.log("G: " + $scope.green );
-              console.log("B: " + $scope.blue );
-            
+        function getColor(){   
+            $scope.hex = rgbToHex($scope.red, $scope.green, $scope.blue);
             return "rgb(" +  $scope.red + ","   +  $scope.green + "," +  $scope.blue + ")";   
+            
  
         }
                                     
-        function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
-function toHex(n) {
- n = parseInt(n,10);
- if (isNaN(n)) return "00";
- n = Math.max(0,Math.min(n,255));
- return "0123456789ABCDEF".charAt((n-n%16)/16)
-      + "0123456789ABCDEF".charAt(n%16);
-}
+        function rgbToHex(R,G,B) {
+            return toHex(R)+toHex(G)+toHex(B)
+        }
+         
+        function toHex(n) {
+            n = parseInt(n,10);
+            if (isNaN(n)) {
+                return "00";
+            }
+            n = Math.max(0,Math.min(n,255));
+            return "0123456789ABCDEF".charAt((n-n%16)/16)
+              + "0123456789ABCDEF".charAt(n%16);
+        }
       
     });
     
