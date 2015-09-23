@@ -72,7 +72,7 @@
             $scope.red = 0;
             $scope.green = 255;
             $scope.blue = 255;
-            $scope.hex = '';
+            $scope.hex = '00FFFF';
          
         $scope.updateColor = function (){
            var element = document.getElementById("color");  
