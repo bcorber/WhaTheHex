@@ -40,7 +40,7 @@
 //            var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
 //            drawColorSquare(canvas, color, imageObj);
           }
-        }, false);
+//        }, false
 
       
     });
@@ -75,17 +75,13 @@
             $scope.hex = '';
          
         $scope.updateColor = function (){
-            
            var element = document.getElementById("color");  
            element.style.background = getColor();
-           
         }
          
         function getColor(){   
             $scope.hex = rgbToHex($scope.red, $scope.green, $scope.blue);
             return "rgb(" +  $scope.red + ","   +  $scope.green + "," +  $scope.blue + ")";   
-            
- 
         }
                                     
         function rgbToHex(R,G,B) {
@@ -153,5 +149,6 @@
 
       return data;
   });
+    
 })();
 
