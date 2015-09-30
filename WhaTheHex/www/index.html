@@ -101,10 +101,10 @@
             
 <!--            <button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="capturePhoto();">Capture Photo</button>-->
     
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;width:100%;" id="largeImage" src="" />
+    
+    <img style="display:none;width:100%;height:100%;" id="largeImage" src="" />
             
-    <canvas id="canvas" innderwidth="100" innerheight="100"></canvas>
+    <canvas id="canvas"></canvas>
 
 <script type="text/javascript" charset="utf-8">
 
@@ -121,14 +121,16 @@
         }
 
         function onPhotoDataSuccess(imageData) {
-          var smallImage = document.getElementById('largeImage');
+          var largeImage = document.getElementById('largeImage');
           largeImage.style.display = 'block';
           largeImage.src = "data:image/jpeg;base64," + imageData;
             setCanvasFromImage(imageData);
         }
+    
+        
 
         function capturePhoto() {
-          navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+          navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 100,
             destinationType: destinationType.DATA_URL });
         }
 
@@ -164,8 +166,8 @@
             </ons-row>
 <!--            <button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>-->
             
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;width:100%;" id="largeImage" src="" />
+    
+    <img style="display:none;width:100%;height:100%;" id="largeImage" src="" />
 
     <script type="text/javascript" charset="utf-8">
 
@@ -181,9 +183,9 @@
         }
 
         function onPhotoDataSuccess(imageData) {
-          var smallImage = document.getElementById('largeImage');
-          smallImage.style.display = 'block';
-          smallImage.src = "data:image/jpeg;base64," + imageData;
+          var largeImage = document.getElementById('largeImage');
+          largeImage.style.display = 'block';
+          largeImage.src = "data:image/jpeg;base64," + imageData;
         }
 
         function onPhotoURISuccess(imageURI) {
@@ -257,6 +259,7 @@
 
             <p style="text-align:center;margin-left:auto;margin-right:auto;width:75px;padding:10px;border:1px solid black;">#{{hex}}</p>
             
+
            
             
         </ons-page>
