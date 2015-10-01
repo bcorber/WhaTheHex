@@ -23,33 +23,33 @@
       
       
       
-        var setCanvasFromImage = function(_data) {
-        var img = new Image,
-        canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d"),
-        src = "data:image/jpeg;base64," + _data; // insert image url here
-
-        img.crossOrigin = "Anonymous";
-
-        img.onload = function() {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage( img, 0, 0 );
-            localStorage.setItem( "savedImageData", canvas.toDataURL("image/jpeg") );
-
-            img.src = src;
-            // make sure the load event fires for cached images too
-            if ( img.complete || img.complete === undefined ) {
-                img.src = "data:image/jpeg;base64," + _data;
-                img.src = src;
-            }
-        }
-    }
-        
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+//        var setCanvasFromImage = function(_data) {
+//        var img = new Image,
+//        canvas = document.createElement("canvas"),
+//        ctx = canvas.getContext("2d"),
+//        src = "data:image/jpeg;base64," + _data; // insert image url here
+//
+//        img.crossOrigin = "Anonymous";
+//
+//        img.onload = function() {
+//            canvas.width = img.width;
+//            canvas.height = img.height;
+//            ctx.drawImage( img, 0, 0 );
+//            localStorage.setItem( "savedImageData", canvas.toDataURL("image/jpeg") );
+//
+//            img.src = src;
+//            // make sure the load event fires for cached images too
+//            if ( img.complete || img.complete === undefined ) {
+//                img.src = "data:image/jpeg;base64," + _data;
+//                img.src = src;
+//            }
+//        }
+//    }
+//        
+//        var canvas = document.getElementById('canvas');
+//        var context = canvas.getContext('2d');
+//        canvas.width = window.innerWidth;
+//        canvas.height = window.innerHeight;
     });
       
 //    var canvas = document.getElementById('canvas_picker').getContext('2d');
