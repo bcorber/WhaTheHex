@@ -9,6 +9,7 @@
   <!-- JS dependencies (order matters!) -->
   <script src="scripts/platformOverrides.js"></script>
   <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/ngClip.js"></script>
   <script src="lib/onsen/js/onsenui.js"></script>
 
   <!-- CSS dependencies -->
@@ -82,7 +83,7 @@
 
   <ons-template id="live.html">
     <ons-page ng-controller="LiveController">
-      <ons-toolbar>
+      <ons-toolbar fixed-style>
         <div class="left">
           <ons-toolbar-button ng-click="menu.toggle()">
             <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
@@ -102,7 +103,7 @@
 
   <ons-template id="gallery.html">
     <ons-page ng-controller="GalleryController">
-      <ons-toolbar>
+      <ons-toolbar fixed-style>
         <div class="left">
           <ons-toolbar-button ng-click="menu.toggle()">
             <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
