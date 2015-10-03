@@ -30,6 +30,9 @@
     "installed_plugins": {
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "io.onsen.helloworld"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "io.onsen.helloworld"
         }
     },
     "dependent_plugins": {}
