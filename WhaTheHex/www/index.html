@@ -113,6 +113,7 @@
         document.addEventListener("deviceready", onDeviceReady, true);
 
         function onDeviceReady() {
+          console.log('');
           pictureSource = navigator.camera.PictureSourceType;
           destinationType = navigator.camera.DestinationType;
           capturePhoto();
@@ -120,15 +121,15 @@
         }
 
         function onPhotoDataSuccess(imageData) {
+          console.log('');
           var largeImage = document.getElementById('largeImage');
           largeImage.style.display = 'block';
           largeImage.src = "data:image/jpeg;base64," + imageData;
           setCanvasFromImage(imageData);
         }
 
-
-
         function capturePhoto() {
+          console.log('');
           navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
             quality: 100,
             destinationType: destinationType.DATA_URL
