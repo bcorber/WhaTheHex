@@ -52,12 +52,12 @@
       <ons-toolbar modifier="transparent"></ons-toolbar>
 
       <ons-list class="menu-list">
-        <ons-list-item class="menu-item" ng-click="menu.setMainPage('live.html', {closeMenu: true})" onclick="capturePhoto();">
+        <ons-list-item class="menu-item" ng-click="menu.setMainPage('live.html', {closeMenu: true})">
           <ons-icon icon="fa-camera"></ons-icon>
           Camera View
         </ons-list-item>
 
-        <ons-list-item class="menu-item" ng-click="menu.setMainPage('gallery.html', {closeMenu: true})" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">
+        <ons-list-item class="menu-item" ng-click="menu.setMainPage('gallery.html', {closeMenu: true})">
           <ons-icon icon="fa-picture-o"></ons-icon>
           Choose from Gallery
         </ons-list-item>
@@ -98,9 +98,9 @@
         <div class="center">Live Camera</div>
       </ons-toolbar>
 
-      <canvas id="canvas" width="100" height="100" style="margin-left:auto;margin-right:auto;"></canvas>
+      <canvas id="live-canvas" width="100" height="100" style="margin-left:auto;margin-right:auto;"></canvas>
       <br>
-      <p style="text-align:center;margin-left:auto;margin-right:auto;width:75px;padding:10px;border:1px solid black;">#{{picked}}</p>
+      <p style="text-align:center;margin-left:auto;margin-right:auto;width:75px;padding:10px;border:1px solid black;">#{{hex}}</p>
 
     </ons-page>
   </ons-template>
@@ -118,9 +118,10 @@
         <div class="center">Gallery</div>
       </ons-toolbar>
 
-      <!--<button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>-->
+      <canvas id="gallery-canvas" width="100" height="100" style="margin-left:auto;margin-right:auto;"></canvas>
+      <br>
+      <p style="text-align:center;margin-left:auto;margin-right:auto;width:75px;padding:10px;border:1px solid black;">#{{hex}}</p>
 
-      <img style="display:none;width:100%;height:100%;" id="largeImage" src="" />
 
     </ons-page>
   </ons-template>
