@@ -4,7 +4,6 @@
 
 
   //Live camera view controller
-
   module.controller('LiveController', function($scope) {
 
       $scope.hex = '00FFFF';
@@ -117,8 +116,8 @@
 
   });
 
-  //Device's photo gallery controller
 
+  //Device's photo gallery controller
   module.controller('GalleryController', function($scope) {
 
       var pictureSource;
@@ -232,14 +231,14 @@
 
   });
 
-  // App's saved colour pallete controller
 
+  // App's saved colour pallete controller
   module.controller('PalletteController', function($scope) {
     //data pushed
   });
 
-  //App's RGB slider controller
 
+  //App's RGB slider controller
   module.controller('RgbController', function($scope) {
 
     $scope.red = 0;
@@ -274,35 +273,9 @@
 
 
   //App's Help page controller
-
   module.controller('HelpController', function($scope) {
     //where the magic happens... N/A
   });
 
-
-
-  // module.factory('$data', function() {
-  //   var data = {};
-  //
-  //   data.items = [{
-  //     title: 'Item 1 Title',
-  //     label: '4h',
-  //     desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-  //   }, {
-  //     title: 'Another Item Title',
-  //     label: '6h',
-  //     desc: 'Ut enim ad minim veniam.'
-  //   }, {
-  //     title: 'Yet Another Item Title',
-  //     label: '1day ago',
-  //     desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-  //   }, {
-  //     title: 'Yet Another Item Title',
-  //     label: '1day ago',
-  //     desc: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-  //   }];
-  //
-  //   return data;
-  // });
 
 })();

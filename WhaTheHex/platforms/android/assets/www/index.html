@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
-<html lang="en" ng-app="app" ng-csp>
+<html lang="en" ng-app="app">
 
 <head>
   <meta charset="utf-8" />
@@ -11,17 +10,11 @@
   <script src="scripts/platformOverrides.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/onsen/js/onsenui.js"></script>
-  <!--    <script src="http://www.parsecdn.com/js/parse-1.6.2.min.js"></script>-->
 
   <!-- CSS dependencies -->
   <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
   <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-default.css" />
 
-  <!-- CSP support mode (required for Windows Universal apps) -->
-  <link rel="stylesheet" href="lib/angular/angular-csp.css" />
-
-
-  <!-- --------------- App init --------------- -->
 
   <title>WhaTheHex</title>
 
@@ -122,7 +115,6 @@
       <br>
       <p style="text-align:center;margin-left:auto;margin-right:auto;width:75px;padding:10px;border:1px solid black;">#{{hex}}</p>
 
-
     </ons-page>
   </ons-template>
 
@@ -130,7 +122,7 @@
 
   <ons-template id="pallette.html">
     <ons-page ng-controller="PalletteController">
-      <ons-toolbar>
+      <ons-toolbar fixed-style>
         <div class="left">
           <ons-toolbar-button ng-click="menu.toggle()">
             <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
@@ -153,7 +145,7 @@
 
   <ons-template id="rgb.html">
     <ons-page ng-controller="RgbController">
-      <ons-toolbar>
+      <ons-toolbar fixed-style>
         <div class="left">
           <ons-toolbar-button ng-click="menu.toggle()">
             <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
@@ -184,7 +176,7 @@
 
   <ons-template id="help.html">
     <ons-page ng-controller="HelpController">
-      <ons-toolbar>
+      <ons-toolbar fixed-style>
         <div class="left">
           <ons-toolbar-button ng-click="menu.toggle()">
             <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
