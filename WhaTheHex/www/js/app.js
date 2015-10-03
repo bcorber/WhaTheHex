@@ -63,16 +63,12 @@
           mouseDown = true;
         }, false);
 
-        canvas.addEventListener('mouseup', function() {
-          mouseDown = false;
-        }, false);
+        canvas.addEventListener('mouseup', function(event) {
+          console.log('mouseup');
 
-        canvas.addEventListener('mousemove', function(evt) {
-          console.log('mousemove');
-
-          var mousePos = getMousePos(canvas, evt);
+          //mouseDown = false;
+          var mousePos = getMousePos(canvas, event);
           var color = undefined;
-
           if (mouseDown && mousePos !== null && mousePos.x > padding && mousePos.x < padding + imageObj.width && mousePos.y > padding && mousePos.y < padding + imageObj.height) {
             var imageData = context.getImageData(padding, padding, imageObj.width, imageObj.width);
             var data = imageData.data;
@@ -81,10 +77,11 @@
             var red = data[((imageObj.width * y) + x) * 4];
             var green = data[((imageObj.width * y) + x) * 4 + 1];
             var blue = data[((imageObj.width * y) + x) * 4 + 2];
-            var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
-            console.log('picked color is ' + color);
+            //var color = 'rgb(' + red + ',' + green + ',' + blue + ')';
+            //console.log('picked color is ' + color);
             updateColor(red, green, blue);
           }
+
         }, false);
 
         context.drawImage(imageObj, padding, padding);
@@ -92,7 +89,8 @@
 
       function updateColor(R, G, B) {
         $scope.picked = rgbToHex(R, G, B);
-        console.log($scope.picked);
+        //console.log($scope.picked);
+        $scope.$apply();
       }
 
       function rgbToHex(R, G, B) {
@@ -120,12 +118,45 @@
 
   });
 
-
-
   //Device's photo gallery controller
 
   module.controller('GalleryController', function($scope, $data) {
-    //where the magic happens... on page load get photo
+    
+      var pictureSource;
+      var destinationType;
+
+      document.addEventListener("deviceready", onDeviceReady, true);
+
+      function onPageload() {
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+        getPhoto(pictureSource.PHOTOLIBRARY);
+      }
+
+      function onPhotoDataSuccess(imageData) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+        largeImage.src = "data:image/jpeg;base64," + imageData;
+      }
+
+      function onPhotoURISuccess(imageURI) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+        largeImage.src = imageURI;
+      }
+
+      function getPhoto(source) {
+        navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+          quality: 50,
+          destinationType: destinationType.FILE_URI,
+          sourceType: source
+        });
+      }
+
+      function onFail(message) {
+        alert('Failed because: ' + message);
+      }
+
   });
 
   // App's saved colour pallete controller
@@ -176,17 +207,6 @@
   });
 
 
-  module.controller('MasterController', function($scope, $data) {
-    $scope.items = $data.items;
-
-    $scope.showDetail = function(index) {
-      var selectedItem = $data.items[index];
-      $data.selectedItem = selectedItem;
-      $scope.navi.pushPage('detail.html', {
-        title: selectedItem.title
-      });
-    };
-  });
 
   module.factory('$data', function() {
     var data = {};

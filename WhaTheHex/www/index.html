@@ -85,7 +85,7 @@
     </ons-page>
   </ons-template>
 
-  <!--                        Live Camera View    -->
+  <!-- CAMERA -->
 
   <ons-template id="live.html">
     <ons-page ng-controller="LiveController">
@@ -105,7 +105,7 @@
     </ons-page>
   </ons-template>
 
-  <!--      Device's photo Gallery                                 -->
+  <!-- GALLERY -->
 
   <ons-template id="gallery.html">
     <ons-page ng-controller="GalleryController">
@@ -118,58 +118,14 @@
         <div class="center">Gallery</div>
       </ons-toolbar>
 
-
-      <ons-row style="margin-top: 100px; text-align: center;">
-        <ons-col>
-
-        </ons-col>
-      </ons-row>
-      <!--            <button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>-->
-
+      <!--<button class="button" style="display:block; margin-left:auto; margin-right:auto; margin-top:100px;" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>-->
 
       <img style="display:none;width:100%;height:100%;" id="largeImage" src="" />
 
-      <script type="text/javascript" charset="utf-8">
-        var pictureSource; // picture source
-        var destinationType; // sets the format of returned value
-
-        document.addEventListener("deviceready", onDeviceReady, true);
-
-        function onPageload() {
-          pictureSource = navigator.camera.PictureSourceType;
-          destinationType = navigator.camera.DestinationType;
-          getPhoto(pictureSource.PHOTOLIBRARY);
-        }
-
-        function onPhotoDataSuccess(imageData) {
-          var largeImage = document.getElementById('largeImage');
-          largeImage.style.display = 'block';
-          largeImage.src = "data:image/jpeg;base64," + imageData;
-        }
-
-        function onPhotoURISuccess(imageURI) {
-          var largeImage = document.getElementById('largeImage');
-          largeImage.style.display = 'block';
-          largeImage.src = imageURI;
-        }
-
-        function getPhoto(source) {
-          navigator.camera.getPicture(onPhotoURISuccess, onFail, {
-            quality: 50,
-            destinationType: destinationType.FILE_URI,
-            sourceType: source
-          });
-        }
-
-        function onFail(message) {
-          alert('Failed because: ' + message);
-        }
-      </script>
     </ons-page>
   </ons-template>
 
-  <!--                    Saved Colour Pallette       -->
-
+  <!-- PALETTE -->
 
   <ons-template id="pallette.html">
     <ons-page ng-controller="PalletteController">
@@ -192,7 +148,7 @@
     </ons-page>
   </ons-template>
 
-  <!--                        RGB Sliders           -->
+  <!-- SLIDERS -->
 
   <ons-template id="rgb.html">
     <ons-page ng-controller="RgbController">
@@ -223,7 +179,7 @@
     </ons-page>
   </ons-template>
 
-  <!--     Help                    -->
+  <!-- HELP -->
 
   <ons-template id="help.html">
     <ons-page ng-controller="HelpController">
