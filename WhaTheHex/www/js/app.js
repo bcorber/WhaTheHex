@@ -1,10 +1,10 @@
 (function() {
   'use strict';
-  var module = angular.module('app', ['onsen']);
+  var module = angular.module('app', ['onsen', 'service']);
 
 
   //Live camera view controller
-  module.controller('LiveController', function($scope) {
+  module.controller('LiveController', function($scope, ParseService) {
 
       $scope.hex = '00FFFF';
       var pictureSource;
@@ -125,7 +125,7 @@
 
 
   //Device's photo gallery controller
-  module.controller('GalleryController', function($scope) {
+  module.controller('GalleryController', function($scope, ParseService) {
 
       var pictureSource;
       var destinationType;
@@ -242,13 +242,21 @@
 
 
   // App's saved colour pallete controller
-  module.controller('PalletteController', function($scope) {
-    //data pushed
+  module.controller('PalletteController', function($scope, ParseService) {
+
+    ParseService.getPalettes(function(results) {
+      $scope.$apply(function() {
+        console.log(results);
+        $scope.items = results;
+      });
+    });
+
+
   });
 
 
   //App's RGB slider controller
-  module.controller('RgbController', function($scope) {
+  module.controller('RgbController', function($scope, ParseService) {
 
     $scope.red = 0;
     $scope.green = 255;
@@ -276,6 +284,13 @@
       }
       n = Math.max(0, Math.min(n, 255));
       return "0123456789ABCDEF".charAt((n - n % 16) / 16) + "0123456789ABCDEF".charAt(n % 16);
+    }
+
+    $scope.addPalette = function() {
+      ParseService.addPalette(
+        $scope.hex, function(object) {
+          alert('successfully saved palette');
+      });
     }
 
   });
