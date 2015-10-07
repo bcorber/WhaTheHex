@@ -21,9 +21,12 @@
 
       function capturePhoto() {
         console.log('capturePhoto');
+
         navigator.camera.getPicture(onSuccess, onFail, {
           quality: 50,
-          destinationType: destinationType.DATA_URL
+          destinationType: destinationType.DATA_URL,
+          targetWidth: (window.innerWidth  * 0.8),
+          targetHeight: (window.innerHeight  * 0.8)
         });
       }
 
@@ -54,8 +57,8 @@
         var context = canvas.getContext('2d');
         context.strokeStyle = '#444';
         context.lineWidth = 2;
-        context.canvas.width  = window.innerWidth - padding;
-        context.canvas.height = window.innerWidth - padding;
+        context.canvas.width  = (window.innerWidth * 0.8) - padding;
+        context.canvas.height = (window.innerHeight * 0.8) - padding;
 
         canvas.addEventListener('mousedown', function() {
           mouseDown = true;
@@ -82,13 +85,17 @@
 
         }, false);
 
-        context.drawImage(imageObj, padding, padding);
+        context.drawImage(imageObj, padding, padding, imageObj.width, imageObj.height);
       }
 
       function updateColor(R, G, B) {
         $scope.hex = rgbToHex(R, G, B);
         //console.log($scope.hex);
         $scope.$apply();
+
+        var element = document.getElementById("lbl");
+        element.style.color = "rgb(" + R + "," + G + "," + B + ")";
+
       }
 
       function rgbToHex(R, G, B) {
@@ -142,7 +149,9 @@
         navigator.camera.getPicture(onSuccess, onFail, {
           quality: 50,
           destinationType: destinationType.FILE_URI,
-          sourceType: source
+          sourceType: source,
+          targetWidth: window.innerWidth - 10,
+          targetHeight: ((window.innerWidth /4) *3) -10
         });
       }
 
