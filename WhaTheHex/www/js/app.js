@@ -1,10 +1,10 @@
 (function() {
   'use strict';
-  var module = angular.module('app', ['onsen']);
+  var module = angular.module('app', ['onsen', 'service']);
 
 
   //Live camera view controller
-  module.controller('LiveController', function($scope) {
+  module.controller('LiveController', function($scope, ParseService) {
 
 <<<<<<< HEAD
   module.controller
@@ -155,9 +155,12 @@
 
       function capturePhoto() {
         console.log('capturePhoto');
+
         navigator.camera.getPicture(onSuccess, onFail, {
           quality: 50,
-          destinationType: destinationType.DATA_URL
+          destinationType: destinationType.DATA_URL,
+          targetWidth: (window.innerWidth  * 0.8),
+          targetHeight: (window.innerHeight  * 0.8)
         });
       }
 
@@ -188,8 +191,8 @@
         var context = canvas.getContext('2d');
         context.strokeStyle = '#444';
         context.lineWidth = 2;
-        context.canvas.width  = window.innerWidth - padding;
-        context.canvas.height = window.innerWidth - padding;
+        context.canvas.width  = (window.innerWidth * 0.8) - padding;
+        context.canvas.height = (window.innerHeight * 0.8) - padding;
 
         canvas.addEventListener('mousedown', function() {
           mouseDown = true;
@@ -216,13 +219,17 @@
 
         }, false);
 
-        context.drawImage(imageObj, padding, padding);
+        context.drawImage(imageObj, padding, padding, imageObj.width, imageObj.height);
       }
 
       function updateColor(R, G, B) {
         $scope.hex = rgbToHex(R, G, B);
         //console.log($scope.hex);
         $scope.$apply();
+
+        var element = document.getElementById("lbl");
+        element.style.color = "rgb(" + R + "," + G + "," + B + ")";
+
       }
 
       function rgbToHex(R, G, B) {
@@ -253,7 +260,7 @@
 
 
   //Device's photo gallery controller
-  module.controller('GalleryController', function($scope) {
+  module.controller('GalleryController', function($scope, ParseService) {
 
       var pictureSource;
       var destinationType;
@@ -277,7 +284,9 @@
         navigator.camera.getPicture(onSuccess, onFail, {
           quality: 50,
           destinationType: destinationType.FILE_URI,
-          sourceType: source
+          sourceType: source,
+          targetWidth: window.innerWidth - 10,
+          targetHeight: ((window.innerWidth /4) *3) -10
         });
       }
 
@@ -368,13 +377,21 @@
 
 
   // App's saved colour pallete controller
-  module.controller('PalletteController', function($scope) {
-    //data pushed
+  module.controller('PalletteController', function($scope, ParseService) {
+
+    ParseService.getPalettes(function(results) {
+      $scope.$apply(function() {
+        console.log(results);
+        $scope.items = results;
+      });
+    });
+
+
   });
 
 
   //App's RGB slider controller
-  module.controller('RgbController', function($scope) {
+  module.controller('RgbController', function($scope, ParseService) {
 
     $scope.red = 0;
     $scope.green = 255;
@@ -402,6 +419,13 @@
       }
       n = Math.max(0, Math.min(n, 255));
       return "0123456789ABCDEF".charAt((n - n % 16) / 16) + "0123456789ABCDEF".charAt(n % 16);
+    }
+
+    $scope.addPalette = function() {
+      ParseService.addPalette(
+        $scope.hex, function(object) {
+          alert('successfully saved palette');
+      });
     }
 
   });
